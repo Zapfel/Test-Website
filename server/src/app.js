@@ -20,4 +20,15 @@ app.get('/status', (req,res) => {
 	})
 })
 
+//refer to AuthenticationService.js in client folder
+//this is the express endpoint it discusses
+//we can see below the ${req.body.email} in the message below calls
+//the email referenced in the AuthenticationService.js file
+//when adding a statement like this use '`' instead of single quotes
+app.post('/register', (req,res) => {
+	res.send({
+		message: `Hello ${req.body.email}!, has been Registered!!!`
+	})
+})
+
 app.listen(process.env.Port || 8082)
