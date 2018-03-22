@@ -1,0 +1,1 @@
+//routes point to controllers

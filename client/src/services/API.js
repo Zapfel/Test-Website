@@ -1,4 +1,4 @@
-import axios from 'axios' // imports axios library
+import axios from 'axios'; // imports axios library
 
 // connector creation
 // returns a connector
@@ -6,7 +6,7 @@ import axios from 'axios' // imports axios library
 // Different end points
 export default() => {
 	return axios.create({
-		baseURL: 'http://localhost:8082/' // baseURL initialization
+		baseURL: 'http://localhost:8080/' // baseURL initialization
 
 	})
 
