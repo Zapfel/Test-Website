@@ -1,30 +1,41 @@
 <!-- v-model allows code to interact into the script tags -->
+
+
 <template>
-  <div>
-
-    <h1>Register</h1>
-
-    <input
-      type="email"
-      name="email"
-      v-model="email"
-      placeholder="email" />
-
-    <input
-      type="password"
-      name="password"
-      v-model="password"
-      placeholder="password" />
-
-    <br>
-    <button @click="register">Register</button>
-    <br>
-
-  </div>
+  <v-app id="inspire">
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4>
+            <v-card class="elevation-12">
+              <v-toolbar dark color="primary">
+                <v-flex class="text-xs-center">
+                  <v-toolbar-title>Register</v-toolbar-title>
+                </v-flex>
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field name="email" label="email" type="text" v-model="email"></v-text-field>
+                  <v-text-field name="password" label="password" id="password" type="password" v-model="password"></v-text-field>
+                  <div class="error" v-html="error" />
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-flex class="text-xs-center">
+                  <v-btn color="primary" @click="register">Register</v-btn>
+                </v-flex>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
+
 <script>
-//imports AuthenticationService File 
+//imports AuthenticationService File
 import AuthenticationService from '@/services/AuthenticationService'
 // data exported from page
 // has default setting of email and password
@@ -33,23 +44,27 @@ export default {
   methods: {
     async register() {
       console.log('register button was clicked', this.email, this.password);
-
-      //uses the imported AuthenticationService file and injects email
-      //and password from html into it
-      const response = await AuthenticationService.register({
-        email: this.email,
-        password: this.password
-      })
+      try {
+        //uses the imported AuthenticationService file and injects email
+        //and password from html into it
+        const response = await AuthenticationService.register({
+          email: this.email,
+          password: this.password
+        })
+      } catch(error) {
+        this.error = error.response.data.error
+      } //end try-catch block
 
       console.log(`Register contained ${response.data}`)
 
-    }
+    } //end Register
   },
 
   data() {
     return {
-      email: 'abc',
-      password: '123'
+      email: '',
+      password: '',
+      error: null
     }
   }, //end data
 
@@ -70,4 +85,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .error {
+    color: darkred
+  }
+  .register {
+
+  }
 </style>

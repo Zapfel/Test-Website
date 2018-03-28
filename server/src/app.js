@@ -5,7 +5,9 @@ const bodyParser = require('body-parser') //efficent json parsing
 const cors = require('cors')
 const morgan = require('morgan')
 const config = require('./config')
-//const mongoose = require('mongoose')
+const mongoose = require('mongoose')
+
+mongoose.connect(config.db.connection) //connects to db, refer to config for other details
 
 const app = express()
 app.use(morgan('combined')) //use log generator pass a string of 'combined'

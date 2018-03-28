@@ -1,28 +1,11 @@
-const config = require('./config')
-const mongoose = require('mongoose')
-mongoose.connect(config.db.connection)
-userData = require('./models/User')
+const AuthenticationController = require('./controllers/AuthenticationController')
 
-//currently this directory exists as an example
+//refer to controllers for references
 module.exports = (app) => {
-//refer to AuthenticationService.js in client folder
-//this is the express endpoint it discusses
-//we can see below the ${req.body.email} in the message below calls
-//the email referenced in the AuthenticationService.js file
-//when adding a statement like this use '`' instead of single quotes
-    app.post('/register', (req,res) => {
-        const user = req.body
-        userData.addUser(user, function(err, user) {
-            if(err){
-                throw err
-            }
-            res.json(user)
-        })
 
-        res.send({
-            message: `Hello you've been Registered!!!`
-        })
-    })
+    //after register normally there would be (req, res) since register takes these two arguments we can just replace
+    // it, to be more syntaxically pleasing
+    app.post('/register', AuthenticationController.register)
 
 // request types
 // get post put patch delete
