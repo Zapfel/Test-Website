@@ -11,9 +11,15 @@ export default {
 	register (credentials) {
 		// passes the email and pw below to the post method
 		// does post request to register endpoint on our express server
+		// after creating this we now would create a register endpoint
+		// on backend, refer to app.js in client/src folder 
 		return API().post('register', credentials)
-	}// after creating this we now would create a register endpoint
-}	// on backend, refer to app.js in client/src folder
+	},
+
+	Login (credentials){
+		return API().post('login',credentials)
+	}
+}	
 
 //postman app is ment to mimic this part of the code
 

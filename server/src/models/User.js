@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 const uniqueValidator = require('mongoose-unique-validator')
 const Schema = mongoose.Schema
 
@@ -23,27 +24,47 @@ const userDataSchema = new Schema({
         type: String,
         required: [true, 'please enter a password'],
         minlength: [8,'Your password must have a minimum of 8 characters'],
-        maxlength: [25,'Passwords must be less than 25 characters'],
+        maxlength: [100,'Passwords have a maximum length of 25 characters'],
     }
 }, {collection: 'userData'})
-userDataSchema.plugin(uniqueValidator, { message: 'This email address has been taken, please try another.'})
+userDataSchema.plugin(uniqueValidator, { message: 'This email address has already been used, please try another.'})
 
 const userData = mongoose.model('userData', userDataSchema)
 module.exports = userData
 
-//get userData
-//callback is what to find, limit is # of times it can be performed
-module.exports.getData = function(callback, limit) {
-    userData.find(callback).limit(limit)
-}
-
-//get user
-//finds an individual user, example not implemented in routes
-module.exports.getUserById = function(id, callback) {
-    userData.find(id, callback)
-}
 
 //add user
 module.exports.addUser = function(User, callback) {
+    //hasing password before sending it to database
+    User.password = bcrypt.hashSync(User.password, bcrypt.genSaltSync(9))
     userData.create(User, callback)
 }
+
+module.exports.validPassword = function(inputPassword,queriedPassword){
+    return bcrypt.compareSync(inputPassword,queriedPassword)
+}
+
+
+//get userData
+//callback is what to find, limit is # of times it can be performed
+//reference: https://www.youtube.com/watch?v=W8uKHZMJOyQ
+//module.exports.getData = function(callback, limit) {
+//    userData.find(callback).limit(limit)
+//}
+
+//get user
+//finds an individual user, example not implemented in routes
+//module.exports.getUserById = function(id, callback) {
+//    userData.find(id, callback)
+//}
+
+
+//Security
+//userDataSchema.methods.generateHash = function(password){
+//    return 
+//}
+
+//userDataSchema.methods.validPassword = function(password){
+//    return bcrypt.compareSync(password, this.local.password)
+//}
+

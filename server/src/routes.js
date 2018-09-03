@@ -7,6 +7,8 @@ module.exports = (app) => {
     // it, to be more syntaxically pleasing
     app.post('/register', AuthenticationController.register)
 
+    app.post('/Login', AuthenticationController.Login)
+
 // request types
 // get post put patch delete
 // below is a get request to a status endpoint located at:
